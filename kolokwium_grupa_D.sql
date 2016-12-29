@@ -35,8 +35,8 @@ SELECT p.nazwa, p.id_producent
   FROM producent p INNER JOIN produkt pkt
   ON p.id_producent = pkt.id_producent
   GROUP BY p.nazwa, p.id_producent
-  HAVING SUM(pkt.ilosc_sztuk_magazyn) IN (
-    SELECT TOP 10 SUM(pt.ilosc_sztuk_magazyn) AS ilosc
+  HAVING SUM(pkt.ilosc_sztuk_magazyn) = (
+    SELECT TOP 1 SUM(pt.ilosc_sztuk_magazyn) AS ilosc
 	  FROM produkt pt
 	  GROUP BY pt.id_producent
 	  ORDER BY ilosc DESC
