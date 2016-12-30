@@ -17,37 +17,47 @@ GO
 
 --usuwanie kluczy obcych z bazy
 DECLARE @sql NVARCHAR(300)
-WHILE EXISTS(SELECT TOP 1 1 
-             FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-             WHERE TABLE_CATALOG=DB_NAME() AND 
-                   CONSTRAINT_TYPE='FOREIGN KEY')
+WHILE EXISTS (
+  SELECT TOP 1 1 
+    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+    WHERE TABLE_CATALOG=DB_NAME() AND 
+		  CONSTRAINT_TYPE='FOREIGN KEY'
+)
 BEGIN
-  SELECT @sql='ALTER TABLE ' + TABLE_NAME + 
-         ' DROP CONSTRAINT ' + CONSTRAINT_NAME 
-  FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
-  WHERE TABLE_CATALOG=DB_NAME() AND 
-        CONSTRAINT_TYPE='FOREIGN KEY'
-  EXEC sp_executesql @sql
+  SELECT @sql='ALTER TABLE ' + TABLE_NAME + ' DROP CONSTRAINT ' + CONSTRAINT_NAME 
+    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+    WHERE TABLE_CATALOG=DB_NAME() AND 
+          CONSTRAINT_TYPE='FOREIGN KEY'
+    EXEC sp_executesql @sql
 END
 GO
 
 --usuwanie tabel
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='gra')
 DROP TABLE gra;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='mapa')
 DROP TABLE mapa;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='druzyna')
 DROP TABLE druzyna;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='adres')
 DROP TABLE adres;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='gracz')
 DROP TABLE gracz;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='komentator')
 DROP TABLE komentator;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='turniej')
 DROP TABLE turniej;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='mecz')
 DROP TABLE mecz;
 GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_name='rozgrywka')
 DROP TABLE rozgrywka;
 GO
 --===================================================================================================================================================
@@ -341,13 +351,13 @@ INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_cache, 22, 10);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_shye, @id_komentator_brak, @id_turniej_eleague, 2, '2016-10-25', 0, 0);
+VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_eleague, 2, '2016-10-25', 0, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_mirage, 10, 5);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_dust2, 22, 21);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-10-25', 0, 0);
+VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-10-22', 0, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 3, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 2, 3);
@@ -367,26 +377,92 @@ INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 0, 3);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-11-26', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_scr1be, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-20', 0, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 2, 3);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 2, 3);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_gsi, 2, '2016-11-26', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_gsi, 2, '2016-11-21', 0, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 3, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 2, 0);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_shye, @id_turniej_gsi, 2, '2016-11-26', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-24', 0, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 2, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 1, 0);
 
 GO
 --===================================================================================================================================================
+--zapytania
+--kto grał (zawodnicy) w meczu 2016-11-26?
+SELECT g.ksywa, g.id_druzyna
+  FROM gracz g INNER JOIN mecz m
+  ON g.id_druzyna = m.id_druzyna1
+  WHERE m.data_meczu = '2016-11-26'
+UNION
+SELECT g.ksywa, g.id_druzyna
+  FROM gracz g INNER JOIN mecz m
+  ON g.id_druzyna = m.id_druzyna2
+  WHERE m.data_meczu = '2016-11-26'
+  ORDER BY g.id_druzyna ASC, g.ksywa ASC;
 
+--który komentatorzy występowali najczęściej w roku 2016 jako pierwszy i drugi komentator?
+SELECT k.imie, k.ksywa, k.nazwisko, COUNT(m.id_komentator1) AS ilosc
+  FROM komentator k INNER JOIN mecz m
+  ON k.id_komentator = m.id_komentator1 
+  GROUP BY k.imie, k.ksywa, k.nazwisko
+  HAVING COUNT(m.id_komentator1) = (
+    SELECT TOP 1 COUNT(mm.id_komentator1) AS ilosc
+	  FROM mecz mm
+	  WHERE YEAR(mm.data_meczu) = 2016 AND k.imie != '-'
+	  GROUP BY mm.id_komentator1
+	  ORDER BY ilosc DESC
+  )
+
+ SELECT k.imie, k.ksywa, k.nazwisko, COUNT(m.id_komentator2) AS ilosc
+  FROM komentator k INNER JOIN mecz m
+  ON k.id_komentator = m.id_komentator2 
+  GROUP BY k.imie, k.ksywa, k.nazwisko
+  HAVING COUNT(m.id_komentator2) = (
+    SELECT TOP 1 COUNT(mm.id_komentator2) AS ilosc
+	  FROM mecz mm
+	  WHERE YEAR(mm.data_meczu) = 2016 AND k.imie != '-'
+	  GROUP BY mm.id_komentator2
+	  ORDER BY ilosc DESC
+  );
+
+--w którym turnieju rozegrano najwięcej meczów?
+SELECT t.nazwa
+  FROM turniej t INNER JOIN mecz m
+  ON t.id_turniej = m.id_turniej
+  GROUP BY t.nazwa
+  HAVING COUNT(m.id_turniej) = (
+    SELECT TOP 1 COUNT(mm.id_turniej) AS ilosc
+	  FROM mecz mm
+	  GROUP BY mm.id_turniej
+	  ORDER BY ilosc DESC
+  );
+
+--z jakiego kraju jest najwięcej zawodników? Wyświetl ich imię, nazwisko i ksywę.
+SELECT g.imie, g.nazwisko, g.ksywa
+  FROM gracz g
+  WHERE g.id_adres IN (
+    SELECT a.id_adres
+      FROM gracz g INNER JOIN adres a
+      ON g.id_adres = a.id_adres
+      GROUP BY a.id_adres
+      HAVING COUNT(g.id_adres) IN (
+        SELECT TOP 1 COUNT(aa.id_adres) AS ilosc
+	      FROM gracz aa
+	      GROUP BY aa.id_adres
+	      ORDER BY ilosc DESC
+      )
+  );
+
+--================================
 SELECT * FROM rozgrywka;
 SELECT * FROM mecz;
 SELECT * FROM turniej;
@@ -396,3 +472,5 @@ SELECT * FROM adres;
 SELECT * FROM druzyna ORDER BY id_druzyna;
 SELECT * FROM gra;
 SELECT * from mapa;
+
+--================================
