@@ -141,8 +141,8 @@ GO
 CREATE TABLE rozgrywka (
   id_mecz INTEGER NOT NULL REFERENCES mecz(id_mecz),
   id_mapa INTEGER NOT NULL REFERENCES mapa(id_mapa),
-  wynik_druz_1 INT NOT NULL DEFAULT 0,
-  wynik_druz_2 INT NOT NULL DEFAULT 0,
+  wynik_druz_1 INT NOT NULL DEFAULT 0 CHECK(wynik_druz_1 >= 0),
+  wynik_druz_2 INT NOT NULL DEFAULT 0 CHECK(wynik_druz_2 >= 0),
   PRIMARY KEY(id_mecz, id_mapa)
 );
 GO
@@ -338,58 +338,58 @@ DECLARE @id_mapa_ilios INT SET @id_mapa_ilios = (SELECT TOP 1 id_mapa FROM mapa 
 
 DECLARE @id_mecz INT
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_eleague, 2, '2016-10-21', 0, 0);
+VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_eleague, 2, '2016-10-21', 2, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_mirage, 20, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_dust2, 12, 10);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_hexagrams, @id_komentator_shye, @id_turniej_eleague, 2, '2016-10-22', 0, 0);
+VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_hexagrams, @id_komentator_shye, @id_turniej_eleague, 2, '2016-10-22', 2, 1);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_mirage, 14, 12);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_dust2, 12, 20);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_cache, 22, 10);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_eleague, 2, '2016-10-25', 0, 0);
+VALUES (@id_druzyna_virtus_pro_cs, @id_druzyna_astralis, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_eleague, 2, '2016-10-25', 2, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_mirage, 10, 5);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_de_dust2, 22, 21);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-10-22', 0, 0);
+VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-10-22', 2, 1);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 3, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 2, 3);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 2, 0);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-25', 0, 0);
+VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-25', 1, 2);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 2, 3);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 2, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 0, 2);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-11-26', 0, 0);
+VALUES (@id_druzyna_immortals, @id_druzyna_skt_t1, @id_komentator_shye, @id_komentator_scr1be, @id_turniej_gsi, 2, '2016-11-26', 0, 2);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 1, 3);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 0, 3);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_scr1be, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-20', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_scr1be, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-20', 0, 2);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 2, 3);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 2, 3);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_gsi, 2, '2016-11-21', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_hexagrams, @id_komentator_brak, @id_turniej_gsi, 2, '2016-11-21', 2, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 3, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_hollywood, 2, 0);
 
 INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
-VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-24', 0, 0);
+VALUES (@id_druzyna_envyus, @id_druzyna_misfits, @id_komentator_shye, @id_komentator_hexagrams, @id_turniej_gsi, 2, '2016-11-24', 2, 0);
 SET @id_mecz = (SELECT IDENT_CURRENT('mecz'))
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_numbani, 2, 1);
 INSERT INTO rozgrywka(id_mecz, id_mapa, wynik_druz_1, wynik_druz_2) VALUES (@id_mecz, @id_mapa_ilios, 1, 0);
@@ -474,3 +474,137 @@ SELECT * FROM gra;
 SELECT * from mapa;
 
 --================================
+--procedura nr 1
+DROP PROCEDURE wypisz_graczy;
+GO
+CREATE PROCEDURE wypisz_graczy @kraj INT
+AS
+SELECT * FROM gracz WHERE id_adres=@kraj;
+GO
+EXECUTE wypisz_graczy 6;
+
+--procedura nr 2
+DROP PROCEDURE zmien_druzyne;
+GO
+CREATE PROCEDURE zmien_druzyne @druzyna_poprz INT, @druzyna_obec INT
+AS
+  UPDATE gracz 
+    SET id_druzyna = @druzyna_obec 
+	WHERE id_gracz IN (
+	  SELECT id_gracz FROM gracz WHERE id_druzyna = @druzyna_poprz
+	);
+GO
+SELECT * FROM gracz;
+EXECUTE zmien_druzyne 1, 7;
+SELECT * FROM gracz;
+
+--================================
+--funkcja nr 1
+DROP FUNCTION dbo.ile_meczy_gracza;
+GO
+CREATE FUNCTION dbo.ile_meczy_gracza (@id_gracz INT) RETURNS INT
+BEGIN
+  RETURN (SELECT ((
+    SELECT COUNT(*) 
+	  FROM mecz m INNER JOIN gracz g
+	  ON m.id_druzyna1 = g.id_druzyna
+      WHERE g.id_gracz=@id_gracz
+  ) + (
+	SELECT COUNT(*) 
+	  FROM mecz m INNER JOIN gracz g
+	  ON m.id_druzyna2 = g.id_druzyna
+      WHERE g.id_gracz=@id_gracz
+  )))
+END;
+GO
+SELECT dbo.ile_meczy_gracza(40) AS ile_meczy;
+
+--funkcja nr 2
+DROP FUNCTION dbo.ile_map_meczu;
+GO
+CREATE FUNCTION dbo.ile_map_meczu (@id_mecz INT) RETURNS VARCHAR(50)
+BEGIN
+  RETURN (
+    SELECT COUNT(*)
+	  FROM rozgrywka r
+      WHERE r.id_mecz=@id_mecz
+  )
+END;
+GO
+SELECT dbo.ile_map_meczu(2) AS ile_map;
+
+--================================
+--wyzwalacz nr 1
+DROP TRIGGER turniej_ins;
+GO
+CREATE TRIGGER turniej_ins ON turniej
+AFTER INSERT AS
+BEGIN
+  DECLARE @data_rozp DATETIME, @data_zak DATETIME
+  SET @data_rozp = GETDATE()
+  SET @data_zak = GETDATE()
+    SELECT @data_rozp = data_rozp, @data_zak = data_zak FROM INSERTED WHERE data_rozp > data_zak
+  IF @data_rozp > @data_zak
+  BEGIN
+    RAISERROR('Data rozpoczęcia nie może być późniejsza od daty zakończenia!', 1, 2)
+    ROLLBACK
+  END
+END
+GO
+SELECT * FROM turniej;
+INSERT INTO turniej(nazwa, data_rozp, data_zak, id_adres) VALUES ('DreamHack Winter 2015', '2015-12-09', '2015-11-26', 1);
+INSERT INTO turniej(nazwa, data_rozp, data_zak, id_adres) VALUES ('ELEAGUE Season 3', '2016-11-21', '2016-12-19', 3);
+SELECT * FROM turniej;
+
+--wyzwalacz nr 2
+DROP TRIGGER mecz_ins;
+GO
+CREATE TRIGGER mecz_ins ON mecz
+AFTER INSERT AS
+BEGIN
+  DECLARE @id_druzyna1 INT, @id_druzyna2 INT, @id_komentator1 INT, @id_komentator2 INT
+  SET @id_druzyna1 = -1
+  SET @id_druzyna2 = -2
+  SET @id_komentator1 = -3
+  SET @id_komentator2 = -4
+    SELECT @id_druzyna1 = id_druzyna1, @id_druzyna2 = id_druzyna2, @id_komentator1 = id_komentator1, @id_komentator2 = id_komentator2 
+	FROM INSERTED WHERE id_druzyna1 = id_druzyna2 OR id_komentator1 = id_komentator2
+  IF @id_druzyna1 = @id_druzyna2 OR @id_komentator1 = @id_komentator2
+  BEGIN
+    RAISERROR('Nie można dodać takiej samej drużyny po obu stronach lub takich samych komentatorów!', 1, 2)
+    ROLLBACK
+  END
+END
+GO
+SELECT * FROM mecz;
+INSERT INTO mecz(id_druzyna1, id_druzyna2, id_komentator1, id_komentator2, id_turniej, ilosc_map, data_meczu, wynik_calk_druz_1, wynik_calk_druz_2)
+VALUES (1, 2, 1, 1, 4, 2, '2016-11-21', 2, 0);
+SELECT * FROM mecz;
+
+--wyzwalacz nr 3
+DROP TRIGGER mecz_del_zabron;
+GO
+CREATE TRIGGER mecz_del_zabron ON mecz
+FOR DELETE AS
+BEGIN
+  RAISERROR('Usuwanie meczów jest zabronione!', 1, 2)
+  ROLLBACK
+END
+GO
+SELECT * FROM mecz;
+DELETE FROM mecz; --zadziała, gdy usunie się klucze obce
+SELECT * FROM mecz;
+
+--wyzwalacz nr 4
+DROP TRIGGER gracz_del_zabron;
+GO
+CREATE TRIGGER gracz_del_zabron ON gracz
+FOR DELETE AS
+BEGIN
+  RAISERROR('Usuwanie graczy jest zabronione!', 1, 2)
+  ROLLBACK
+END
+GO
+SELECT * FROM gracz;
+DELETE FROM gracz;
+SELECT * FROM gracz;
