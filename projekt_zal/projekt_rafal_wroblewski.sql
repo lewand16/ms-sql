@@ -481,7 +481,8 @@ CREATE PROCEDURE wypisz_graczy @kraj INT
 AS
 SELECT * FROM gracz WHERE id_adres=@kraj;
 GO
-EXECUTE wypisz_graczy 6;
+DECLARE @id_kraj INT SET @id_kraj = (SELECT id_adres FROM adres WHERE kraj = 'USA' AND miasto IS NULL)
+EXECUTE wypisz_graczy @id_kraj;
 
 --procedura nr 2
 DROP PROCEDURE zmien_druzyne;
@@ -495,7 +496,9 @@ AS
 	);
 GO
 SELECT * FROM gracz;
-EXECUTE zmien_druzyne 1, 7;
+DECLARE @id_druzyna_poprz INT SET @id_druzyna_poprz = (SELECT id_druzyna FROM druzyna WHERE nazwa = 'Astralis')
+DECLARE @id_druzyna_obec INT SET @id_druzyna_obec = (SELECT id_druzyna FROM druzyna WHERE nazwa = 'Virtus.Pro.CS')
+EXECUTE zmien_druzyne @id_druzyna_poprz, 7;
 SELECT * FROM gracz;
 
 --================================
